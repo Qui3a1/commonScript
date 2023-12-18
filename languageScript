@@ -1,4 +1,3 @@
-// commonScript.js
 document.addEventListener('DOMContentLoaded', async function () {
   try {
     // Make a request to the ipinfo.io API to get the user's location
@@ -28,9 +27,18 @@ document.addEventListener('DOMContentLoaded', async function () {
 });
 
 function redirectToLanguagePage(language, currentPagePath) {
-  // Construct the language-specific path based on the current page
-  const languagePath = `/${language}${currentPagePath}`;
-
-  // Redirect the user to the appropriate language page
-  window.location.href = languagePath;
+  // Handle the special case for the home page
+  if (currentPagePath.toLowerCase() === '/home-en') {
+    // Construct the language-specific path for the home page
+    const languagePathForHomePage = `/${language === 'en' ? '' : language}`;
+    
+    // Redirect the user to the appropriate language home page
+    window.location.href = `https://www.tuss.io${languagePathForHomePage}`;
+  } else {
+    // Construct the language-specific path based on the current page
+    const languagePath = `/${language}${currentPagePath}`;
+    
+    // Redirect the user to the appropriate language page
+    window.location.href = `https://www.tuss.io${languagePath}`;
+  }
 }
