@@ -1,0 +1,36 @@
+// commonScript.js
+document.addEventListener('DOMContentLoaded', async function () {
+  try {
+    // Make a request to the ipinfo.io API to get the user's location
+    const response = await fetch('https://ipinfo.io/json');
+    const data = await response.json();
+
+    // Extract country information from the API response
+    const country = data.country;
+
+    // Determine the language based on the country
+    let language = 'en'; // Default language
+
+    if (country === 'MN') {
+      language = 'mn'; // Mongolia
+    } else if (country === 'SG') {
+      language = 'sg'; // Singapore
+    }
+
+    // Get the current page path
+    const currentPagePath = window.location.pathname;
+
+    // Redirect the user to the appropriate language page
+    redirectToLanguagePage(language, currentPagePath);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+});
+
+function redirectToLanguagePage(language, currentPagePath) {
+  // Construct the language-specific path based on the current page
+  const languagePath = `/${language}${currentPagePath}`;
+
+  // Redirect the user to the appropriate language page
+  window.location.href = languagePath;
+}
